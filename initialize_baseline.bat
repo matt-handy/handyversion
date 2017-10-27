@@ -1,0 +1,1 @@
+java -Xmx12g -cp build\jar\FileTreeMonitor.jar handy.FileRunner -i ..\\..

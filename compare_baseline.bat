@@ -1,0 +1,1 @@
+java -cp build\jar\FileTreeMonitor.jar handy.FileRunner -c ..\\..
