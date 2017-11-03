@@ -24,9 +24,12 @@ public class FileTreeBuilder {
 
 			if (folder.isDirectory()) {
 				List<HFile> files = new ArrayList<HFile>();
-				for (File fileEntry : folder.listFiles()) {
-					files.add(getFiles(fileEntry));
+				if(folder.listFiles() != null){
+					for (File fileEntry : folder.listFiles()) {
+						files.add(getFiles(fileEntry));
+					}
 				}
+				
 				return new HFolder(folder.getName(), files);
 			} else {
 				StringBuffer sb = new StringBuffer("");
@@ -54,6 +57,10 @@ public class FileTreeBuilder {
 					//I'm super, duper sure that SHA-1 exists
 				} catch (FileNotFoundException e) {
 					//Already validated that the file is real...
+				} catch (IOException e){
+					//This will occur if a file is locked. Want this flagged as an invalid hash, as it
+					//is mutating
+					sb.append("File_currently_open");
 				}
 
 				return new HData(folder.getName(), sb.toString());
